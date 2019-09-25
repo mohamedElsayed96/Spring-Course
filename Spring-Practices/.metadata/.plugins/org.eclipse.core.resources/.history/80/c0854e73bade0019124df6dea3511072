@@ -1,0 +1,29 @@
+package com.luv2code.springdemo;
+
+public class CricketCoah implements Coach {
+
+	private FortuneService fortuneSerivce;
+	
+	]
+
+	public FortuneService getFortuneSerivce() {
+		return fortuneSerivce;
+	}
+
+	public void setFortuneSerivce(FortuneService fortuneSerivce) {
+		this.fortuneSerivce = fortuneSerivce;
+	}
+
+	@Override
+	public String getDialyWorkout() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getDialyFortune() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

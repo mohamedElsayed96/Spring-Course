@@ -1,0 +1,11 @@
+package com.luv2code.springdemo;
+
+public class FootballCoach implements Coach {
+
+	@Override
+	public String getDialyWorkout() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

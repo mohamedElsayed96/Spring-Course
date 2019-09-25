@@ -1,0 +1,32 @@
+package com.luv2code.springdemo;
+
+public class CricketCoah implements Coach {
+
+	private FortuneService fortuneSerivce;
+	
+	public CricketCoah ()
+	{
+		System.out.println("We are in the Cricket object");
+	}
+
+	public FortuneService getFortuneSerivce() {
+		return fortuneSerivce;
+	}
+
+	public void setFortuneSerivce(FortuneService fortuneSerivce) {
+		this.fortuneSerivce = fortuneSerivce;
+	}
+
+	@Override
+	public String getDialyWorkout() {
+		// TODO Auto-generated method stub
+		return "run with the cricket ball 30 minute";
+	}
+
+	@Override
+	public String getDialyFortune() {
+		// TODO Auto-generated method stub
+		return fortuneSerivce.getFortune();
+	}
+
+}

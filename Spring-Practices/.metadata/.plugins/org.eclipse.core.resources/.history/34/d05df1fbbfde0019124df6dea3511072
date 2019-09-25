@@ -1,0 +1,13 @@
+package com.luv2code.springdemo;
+
+public class RandomFortuneService implements FortuneService {
+
+	private String[] fortunes = {"Good Luck", "Bad Luck", "May god help you"};
+	@Override
+	public String getFortune() {
+		int index = (int) Math.random()* fortunes.length;
+		// TODO Auto-generated method stub
+		return fortunes[index];
+	}
+
+}

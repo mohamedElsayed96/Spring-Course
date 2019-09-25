@@ -1,0 +1,14 @@
+package com.luv2code.springdemo;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.luv2code.springdemo.services.interfaces.*;
+public class BeanScopeDemoApp {
+
+	public static void main(String[] args) {
+
+		// load the spring container config file
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beanScope-applicationContext");
+		//retrieve a  bean 
+	}
+
+}
