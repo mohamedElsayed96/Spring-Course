@@ -1,5 +1,7 @@
-package com.luv2code.springdemo.services.implementation;
-import com.luv2code.springdemo.services.interfaces.*;;
+package com.spring.service.implementation;
+
+import com.spring.service.interfaces.Coach;
+import com.spring.service.interfaces.FortuneService;
 
 public class FootballCoach implements Coach {
 
@@ -12,12 +14,12 @@ public class FootballCoach implements Coach {
 	@Override
 	public String getDialyWorkout() {
 		// TODO Auto-generated method stub
-		return "Train on shooting fot 30 minutes";
+		return "Train on shooting the ball fot 30 minutes";
 	}
 
 	@Override
 	public String getDialyFortune() {
-		
+		// TODO Auto-generated method stub
 		return fortuneService.getFortune();
 	}
 

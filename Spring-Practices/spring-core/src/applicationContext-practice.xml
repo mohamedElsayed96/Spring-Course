@@ -10,7 +10,7 @@
    <bean id="myFortuneService" class="com.luv2code.springdemo.services.implementation.RandomFortuneService">
    </bean>
    
-   <bean id="myCoach"  scope="prototype" class="com.luv2code.springdemo.services.implementation.FootballCoach">
+   <bean id="myCoach"  scope="prototype" class="com.luv2code.springdemo.services.implementation.FootballCoachPractice">
    		<constructor-arg ref="myFortuneService"/>
    
    </bean>
