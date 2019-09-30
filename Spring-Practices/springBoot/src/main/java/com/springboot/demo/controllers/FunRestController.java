@@ -15,4 +15,14 @@ public class FunRestController {
 	{
 		return "Hello World " + LocalDateTime.now();
 	}
+	@RequestMapping(method = RequestMethod.GET, value="/getDialyWorkout")
+	public String getDialyWorkout() 
+	{
+		return "Run a hard 5K!";
+	}
+	@RequestMapping(method = RequestMethod.GET, value="/getDialyFortune")
+	public String getDialyFortune() 
+	{
+		return "Today is your lucky day!";
+	}
 }
