@@ -11,7 +11,7 @@ import com.springdemo.interfaces.FortuneService;
 public class TennisCoach implements Coach {
 
 	@Autowired
-//	@Qualifier("randomFortuneService")
+	@Qualifier("randomFortuneService")
 	private FortuneService fortuneService;
 	
 
