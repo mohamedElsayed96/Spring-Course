@@ -3,12 +3,19 @@ package com.mohamedelsayed.springproject.service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,7 +43,7 @@ public class ReadDataFromCSV  extends ReadData{
 			{
 			    String[] _data = row.split(",");
 			    int x = Integer.valueOf(_data[0]);
-			    System.out.println(x +" "+ _data[1].toUpperCase());
+			    //System.out.println(x +" "+ _data[1].toUpperCase());
 
 			    data.put(x, new String[]{_data[1].toUpperCase(), "BLUE"});
 			}
@@ -59,7 +66,7 @@ public class ReadDataFromCSV  extends ReadData{
 			{
 			    String[] _data = row.split(",");
 			    int x = Integer.valueOf(_data[0]);
-			    System.out.println(x +" "+ _data[1]);
+			    //System.out.println(x +" "+ _data[1]);
 
 			    data.put(x, new String[]{_data[1].toUpperCase(), "GREEN"});
 			}
@@ -81,7 +88,7 @@ public class ReadDataFromCSV  extends ReadData{
 			{
 			    String[] _data = row.split(",");
 			    int x = Integer.valueOf(_data[0]);
-			    System.out.println(x +" "+ _data[1].toUpperCase());
+			    //System.out.println(x +" "+ _data[1].toUpperCase());
 
 			    data.put(x, new String[]{_data[1].toUpperCase(), "RED"});
 			}
@@ -95,7 +102,25 @@ public class ReadDataFromCSV  extends ReadData{
 	@Override
 	public Map<Integer, String[]> getData() {
 		// TODO Auto-generated method stub
-		return data;
+		List<Map.Entry<Integer, String[]> > list = 
+	               new ArrayList<Map.Entry<Integer, String[]> >(data.entrySet()); 
+		Collections.sort(list, new Comparator<Map.Entry<Integer, String[]> >() { 
+            public int compare(Map.Entry<Integer, String[]> o1,  
+                               Map.Entry<Integer, String[]> o2) 
+            { 
+            	
+                int result = (o1.getValue()[0]).compareTo(o2.getValue()[0]); 
+                //System.out.println(o1.getValue()[0]+" "+o2.getValue()[0] + " " +result);
+                if(result != 0 )
+                	return result;
+                return o1.getKey() < o2.getKey()?  -1: 1; 
+            } 
+        }); 
+		Map<Integer, String[]> temp = new LinkedHashMap<Integer, String[]>(); 
+        for (Entry<Integer, String[]> aa : list) { 
+            temp.put(aa.getKey(), aa.getValue()); 
+        } 
+		return temp;
 	}
 	
 	
