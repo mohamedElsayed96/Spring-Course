@@ -18,6 +18,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.mohamedelsayed.springproject.models.DataModel;
+
 @Service
 @Scope("prototype")
 @PropertySource("classpath:application.properties")
@@ -45,7 +47,7 @@ public class ReadDataFromCSV  extends ReadData{
 			    int x = Integer.valueOf(_data[0]);
 			    //System.out.println(x +" "+ _data[1].toUpperCase());
 
-			    data.put(x, new String[]{_data[1].toUpperCase(), "BLUE"});
+			    data.put(x, new DataModel(_data[1].toUpperCase(), "BLUE"));
 			}
 			csvReader.close();
 		} 
@@ -68,7 +70,7 @@ public class ReadDataFromCSV  extends ReadData{
 			    int x = Integer.valueOf(_data[0]);
 			    //System.out.println(x +" "+ _data[1]);
 
-			    data.put(x, new String[]{_data[1].toUpperCase(), "GREEN"});
+			    data.put(x, new DataModel(_data[1].toUpperCase(), "GREEN"));
 			}
 			csvReader.close();
 		} 
@@ -90,7 +92,7 @@ public class ReadDataFromCSV  extends ReadData{
 			    int x = Integer.valueOf(_data[0]);
 			    //System.out.println(x +" "+ _data[1].toUpperCase());
 
-			    data.put(x, new String[]{_data[1].toUpperCase(), "RED"});
+			    data.put(x, new DataModel(_data[1].toUpperCase(), "RED"));
 			}
 			csvReader.close();
 		} 
@@ -100,24 +102,24 @@ public class ReadDataFromCSV  extends ReadData{
 	}
 
 	@Override
-	public Map<Integer, String[]> getData() {
+	public Map<Integer, DataModel> getData() {
 		// TODO Auto-generated method stub
-		List<Map.Entry<Integer, String[]> > list = 
-	               new ArrayList<Map.Entry<Integer, String[]> >(data.entrySet()); 
-		Collections.sort(list, new Comparator<Map.Entry<Integer, String[]> >() { 
-            public int compare(Map.Entry<Integer, String[]> o1,  
-                               Map.Entry<Integer, String[]> o2) 
+		List<Map.Entry<Integer, DataModel> > list = 
+	               new ArrayList<Map.Entry<Integer, DataModel> >(data.entrySet()); 
+		Collections.sort(list, new Comparator<Map.Entry<Integer, DataModel> >() { 
+            public int compare(Map.Entry<Integer, DataModel> o1,  
+                               Map.Entry<Integer, DataModel> o2) 
             { 
             	
-                int result = (o1.getValue()[0]).compareTo(o2.getValue()[0]); 
+                int result = (o1.getValue().getData()).compareTo(o2.getValue().getData()); 
                 //System.out.println(o1.getValue()[0]+" "+o2.getValue()[0] + " " +result);
                 if(result != 0 )
                 	return result;
                 return o1.getKey() < o2.getKey()?  -1: 1; 
             } 
         }); 
-		Map<Integer, String[]> temp = new LinkedHashMap<Integer, String[]>(); 
-        for (Entry<Integer, String[]> aa : list) { 
+		Map<Integer, DataModel> temp = new LinkedHashMap<Integer, DataModel>(); 
+        for (Entry<Integer, DataModel> aa : list) { 
             temp.put(aa.getKey(), aa.getValue()); 
         } 
 		return temp;
