@@ -2,4 +2,4 @@
 
 
 
-\n the end point is **localhost:8090\home.html**
+The end point is **localhost:8090\home.html**
