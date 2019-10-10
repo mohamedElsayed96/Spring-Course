@@ -6,7 +6,6 @@ public class LimitConfiguration {
 	
 	public LimitConfiguration() {
 
-		// TODO Auto-generated constructor stub
 	}
 	public LimitConfiguration(int minmum, int maxmum) {
 		super();

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.microservice.limitsservices.bean.LimitConfiguration;
+import com.microservice.limitsservices.config.Configuration;
 
 @RestController
 public class LimitsConfigurationController {
