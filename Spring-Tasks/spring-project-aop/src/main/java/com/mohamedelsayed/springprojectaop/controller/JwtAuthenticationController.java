@@ -3,7 +3,7 @@ package com.mohamedelsayed.springprojectaop.controller;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 
 
@@ -57,7 +57,7 @@ public class JwtAuthenticationController {
 			final UserDetails userDetails = userDetailsService.findByUsername(authenticationRequest.getUsername());
 			
 			final String token = jwtTokenUtil.generateToken(userDetails);
-			
+		
 			
 			return ResponseEntity.ok(new JwtTokenResponseDTO(token));
 		}

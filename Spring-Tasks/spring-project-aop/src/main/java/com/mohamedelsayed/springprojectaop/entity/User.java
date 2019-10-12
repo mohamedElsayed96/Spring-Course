@@ -143,6 +143,6 @@ public class User {
 		{
 			actions.add(view.convertToDTO());
 		}
-		return new UserDto( username, password, email ,address,  views,  actions);
+		return new UserDto( username, password, email ,address,  views,  actions, null);
 	}
 }

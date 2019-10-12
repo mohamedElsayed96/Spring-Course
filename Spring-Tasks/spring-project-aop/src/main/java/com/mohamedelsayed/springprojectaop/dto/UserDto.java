@@ -25,10 +25,11 @@ public class UserDto {
 	private String email;
 	private List<ViewDTO> views;
 	private List<ActionDTO> actions;
+	private List<AuthorityDTO> authorities;
 	
 	
 	public UserDto(String username, String password, String address, @Email String email, List<ViewDTO> views,
-			List<ActionDTO> actions) {
+			List<ActionDTO> actions, List<AuthorityDTO> authorities) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -36,6 +37,7 @@ public class UserDto {
 		this.email = email;
 		this.views = views;
 		this.actions = actions;
+		this.authorities = authorities;
 	}
 	
 	public UserDto() {
@@ -83,6 +85,15 @@ public class UserDto {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+
+	public List<AuthorityDTO> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<AuthorityDTO> authorities) {
+		this.authorities = authorities;
 	}
 
 	public User mapDtoToEntity(PasswordEncoder passwordEncoder) 
