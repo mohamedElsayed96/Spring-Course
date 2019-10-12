@@ -53,8 +53,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void save(UserDto user) {
-		// TODO Auto-generated method stub
-		UserRepository.save(user.mapDtoToEntity());
+		
 		
 	}
 
@@ -62,8 +61,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto findByUsername(String username) {
 		// TODO Auto-generated method stub
-		Optional<User> user=  UserRepository.findByUsername(username);
-		return user.isPresent()? user.get().Convert() : null ;
+		return  UserRepository.findByUsername(username).Convert();
+		//return user.isPresent()? user.get().Convert() : null ;
 	}
 
 }

@@ -9,15 +9,14 @@ import com.mohamedelsayed.springprojectaop.entity.User;
 @XmlRootElement(name="userDto")
 public class UserDto {
 	
+	
 	private String username;
-	private String password;
 	private String address;
 	
 	
 	public UserDto(String username, String password, String address) {
 		super();
 		this.username = username;
-		this.password = password;
 		this.address = address;
 	}
 	public String getUsername() {
@@ -26,12 +25,7 @@ public class UserDto {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	
 	public String getAddress() {
 		return address;
 	}
@@ -39,9 +33,9 @@ public class UserDto {
 		this.address = address;
 	}
 	
-	public User mapDtoToEntity() 
+	public User mapDtoToEntity(String password) 
 	{
-		User user = new User(this.username, this.password, this.address, new Timestamp(System.currentTimeMillis()));
+		User user = new User(this.username, password, this.address, new Timestamp(System.currentTimeMillis()));
 		return user;
 	}
 	

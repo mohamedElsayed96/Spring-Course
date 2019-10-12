@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.mohamedelsayed.springprojectaop.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-   @Query(value = "select * from user where u.username=?1", nativeQuery = true)
-	Optional<User> findByUsername(String username);
+	User findByUsername(String username);
    
 }

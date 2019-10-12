@@ -1,4 +1,4 @@
-package com.mohamedelsayed.springprojectaop.api;
+package com.mohamedelsayed.springprojectaop.controller;
 
 import java.util.List;
 
@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mohamedelsayed.springprojectaop.dto.RegisterDTO;
 import com.mohamedelsayed.springprojectaop.dto.UserDto;
+import com.mohamedelsayed.springprojectaop.service.RegisterService;
 import com.mohamedelsayed.springprojectaop.service.UserService;
 
 @RestController
 public class UserApi {
 	
 	private UserService userService;
-	
+	@Autowired
+	private RegisterService registerService;
 	@Autowired
 	public UserApi(UserService userService) {
 		super();
@@ -28,11 +31,9 @@ public class UserApi {
 	}
 
 	@PostMapping("/users")
-	public String saveUser(@RequestBody UserDto user) 
+	public String saveUser(@RequestBody RegisterDTO register) 
 	{
-		System.out.println(user.getUsername());
-
-		userService.save(user);
+		registerService.Register(register);
 		return "created";
 	}
 	
@@ -40,6 +41,11 @@ public class UserApi {
 	public List<UserDto> saveUser() 
 	{
 		return userService.findAll();
+	}
+	@GetMapping("/hello")
+	public String hello() 
+	{
+		return "hello bitch";
 	}
 
 }
