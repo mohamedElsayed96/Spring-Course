@@ -6,6 +6,7 @@ import com.mohamedelsayed.springprojectaop.entity.User;
 import com.mohamedelsayed.springprojectaop.entity.View;
 
 public class ViewDTO {
+	private int id;
 	private String name;
 
 	public ViewDTO() {
@@ -13,8 +14,9 @@ public class ViewDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ViewDTO(String name) {
+	public ViewDTO(int id, String name) {
 		super();
+		this.id = id;
 		this.name = name;
 	}
 
@@ -25,6 +27,15 @@ public class ViewDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public View mapDtoToEntity() 
 	{
 		View user = new View(name);

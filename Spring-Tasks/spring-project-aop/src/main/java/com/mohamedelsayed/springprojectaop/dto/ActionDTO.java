@@ -7,6 +7,7 @@ import com.mohamedelsayed.springprojectaop.entity.User;
 
 public class ActionDTO {
 
+	private int id;
 	private String name;
 
 	public String getName() {
@@ -14,11 +15,13 @@ public class ActionDTO {
 	}
 
 	public void setName(String name) {
+
 		this.name = name;
 	}
 
-	public ActionDTO(String name) {
+	public ActionDTO(int id, String name) {
 		super();
+		this.id = id;
 		this.name = name;
 	}
 

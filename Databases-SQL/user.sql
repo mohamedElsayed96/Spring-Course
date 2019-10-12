@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `user`.`user` (
   `address` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
   `create_time` TIMESTAMP NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(250) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
 ENGINE = InnoDB;

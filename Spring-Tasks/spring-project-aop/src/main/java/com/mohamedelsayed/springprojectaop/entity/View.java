@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.mohamedelsayed.springprojectaop.dto.ViewDTO;
+
 @Entity
 public class View {
 	@Id
@@ -30,6 +32,10 @@ public class View {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public ViewDTO convertToDTO() 
+	{
+		return new ViewDTO(id, name);
 	}
 
 }

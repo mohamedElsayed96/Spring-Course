@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mohamedelsayed.springprojectaop.dao.UserRepository;
@@ -15,19 +16,22 @@ import com.mohamedelsayed.springprojectaop.entity.User;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private UserRepository UserRepository;
 	
+	private UserRepository userRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Autowired
 	public UserServiceImpl(UserRepository userRepository) {
 		super();
-		UserRepository = userRepository;
+		this.userRepository = userRepository;
 	}
 
 
 	@Override
 	public List<UserDto> findAll() {
 		// TODO Auto-generated method stub
-		List<User> users = UserRepository.findAll();
+		List<User> users = userRepository.findAll();
 		List<UserDto> userDtos = new ArrayList<UserDto>();
 		for(User user : users) 
 		{
@@ -40,7 +44,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto findById(Integer id) {
 		// TODO Auto-generated method stub
-		Optional<User> user=  UserRepository.findById(id);
+		Optional<User> user=  userRepository.findById(id);
 		return user.isPresent()? user.get().Convert() : null ;
 	}
 
@@ -53,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void save(UserDto user) {
-		
+		userRepository.save(user.mapDtoToEntity(passwordEncoder));
 		
 	}
 
@@ -61,7 +65,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto findByUsername(String username) {
 		// TODO Auto-generated method stub
-		return  UserRepository.findByUsername(username).Convert();
+		return  userRepository.findByUsername(username).Convert();
 		//return user.isPresent()? user.get().Convert() : null ;
 	}
 

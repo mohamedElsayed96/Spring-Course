@@ -1,13 +1,16 @@
 package com.mohamedelsayed.springprojectaop.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import com.mohamedelsayed.springprojectaop.dto.ActionDTO;
 import com.mohamedelsayed.springprojectaop.dto.UserDto;
+import com.mohamedelsayed.springprojectaop.dto.ViewDTO;
 
 
 @Entity
@@ -34,21 +37,18 @@ public class User {
 
     inverseJoinColumns = { @JoinColumn(name = "authority_id") })
 	
-	private List<Authority> authority;
+	private List<Authority> authorities;
 	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_view",
-
     joinColumns = { @JoinColumn(name = "user_id") },
-
     inverseJoinColumns = { @JoinColumn(name = "view_id") })
-	private List<View> view;
+	private List<View> views;
+	
 	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_action",
-
     joinColumns = { @JoinColumn(name = "user_id") },
-
     inverseJoinColumns = { @JoinColumn(name = "action_id") })
-	private List<Action> action;
+	private List<Action> actions;
 	
 	
 	public User() {
@@ -71,9 +71,9 @@ public class User {
 		this.email = email;
 		this.address = address;
 		this.createdTime = createdTime;
-		this.authority = authority;
-		this.view = view;
-		this.action = action;
+		this.authorities = authority;
+		this.views = view;
+		this.actions = action;
 	}
 	public int getId() {
 		return id;
@@ -112,8 +112,37 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public List<Authority> getAuthorities() {
+		return authorities;
+	}
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
+	}
+	public List<View> getViews() {
+		return views;
+	}
+	public void setViews(List<View> views) {
+		this.views = views;
+	}
+	public List<Action> getActions() {
+		return actions;
+	}
+	public void setActions(List<Action> actions) {
+		this.actions = actions;
+	}
 	public UserDto Convert() 
 	{
-		return new UserDto(username, password, address);
+		List<ViewDTO> views = new ArrayList<ViewDTO>();
+		List<ActionDTO> actions = new ArrayList<ActionDTO>();
+		for(View view :this.views) 
+		{
+			views.add(view.convertToDTO());
+		}
+		for(Action view :this.actions) 
+		{
+			actions.add(view.convertToDTO());
+		}
+		return new UserDto( username, password, email ,address,  views,  actions);
 	}
 }

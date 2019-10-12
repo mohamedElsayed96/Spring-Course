@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.mohamedelsayed.springprojectaop.dto.ActionDTO;
+import com.mohamedelsayed.springprojectaop.dto.ViewDTO;
+
 @Entity
 public class Action {
 	@Id
@@ -31,6 +34,10 @@ public class Action {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	public ActionDTO convertToDTO() 
+	{
+		return new ActionDTO(id, name);
+	}
+
 
 }

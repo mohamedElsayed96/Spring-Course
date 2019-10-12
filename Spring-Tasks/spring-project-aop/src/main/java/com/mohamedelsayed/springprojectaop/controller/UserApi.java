@@ -15,15 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mohamedelsayed.springprojectaop.dto.RegisterDTO;
 import com.mohamedelsayed.springprojectaop.dto.UserDto;
-import com.mohamedelsayed.springprojectaop.service.RegisterService;
+
 import com.mohamedelsayed.springprojectaop.service.UserService;
 
 @RestController
 public class UserApi {
 	
 	private UserService userService;
-	@Autowired
-	private RegisterService registerService;
+
 	@Autowired
 	public UserApi(UserService userService) {
 		super();
@@ -31,9 +30,9 @@ public class UserApi {
 	}
 
 	@PostMapping("/users")
-	public String saveUser(@RequestBody RegisterDTO register) 
+	public String saveUser(@RequestBody UserDto register) 
 	{
-		registerService.Register(register);
+		userService.save(register);
 		return "created";
 	}
 	

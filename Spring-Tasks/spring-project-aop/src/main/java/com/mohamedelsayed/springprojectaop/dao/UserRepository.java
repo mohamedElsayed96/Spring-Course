@@ -9,5 +9,6 @@ import com.mohamedelsayed.springprojectaop.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 	User findByUsername(String username);
+	Void deleteByUsername(String username);
    
 }
