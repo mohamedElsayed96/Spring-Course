@@ -19,6 +19,7 @@ public class CurrencyExchangeApi {
 	private ExchangeValueRepository repository;
 	@Autowired
 	private Environment env;
+	
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	public ExchangeValue currencyExchange(@PathVariable("from") String from, @PathVariable("to") String to) 
 	{
