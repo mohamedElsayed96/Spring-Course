@@ -23,16 +23,17 @@ import com.mohamedelsayed.springprojectaop.config.JwtTokenUtil;
 import com.mohamedelsayed.springprojectaop.dto.UserDetails;
 import com.mohamedelsayed.springprojectaop.dto.UserDto;
 import com.mohamedelsayed.springprojectaop.dto.ViewDTO;
+import com.mohamedelsayed.springprojectaop.exception.ExceptionEnum;
+import com.mohamedelsayed.springprojectaop.exception.ExceptionHandler;
 import com.mohamedelsayed.springprojectaop.service.UserDetailsService;
 import com.mohamedelsayed.springprojectaop.service.UserService;
-
-
-
 
 @Aspect
 @Configuration
 public class SecurityFilterAspect {
 
+	@Autowired
+	private ExceptionHandler exceptionHandler;
 	@Autowired
 	private HttpServletRequest request;
 	@Autowired
@@ -55,20 +56,30 @@ public class SecurityFilterAspect {
 	    
 	    if(myAnnotation != null) 
 	    {
-	    	logger.info("Authenticating");
+	    	logger.info("Authenticating....");
 	    	boolean valid = authenticate(requestTokenHeader, myAnnotation);
 	    	if(valid) 
 	    	{
-	    		logger.info("Authenticating + Authorization: succeded Allowed user for {} {}", myAnnotation.type().toString(), myAnnotation.name());
-	    		 
-	    	    return (ResponseEntity<?>) joinPoint.proceed();
-	    	    
+	    		logger.info("Authorizating ...");
+	    		String token = getTokenFromHeader(requestTokenHeader);
+	    		valid = Authorize(jwtTokenUtil.getUsernameFromToken(token), myAnnotation);
+	    		if(valid)
+	    		{
+		    		logger.info("Authenticating + Authorization: succeded Allowed user for {} {}", myAnnotation.type().toString(), myAnnotation.name());
+		    		 
+		    	    return (ResponseEntity<?>) joinPoint.proceed();
+	    		}
+	    		else 
+	    		{
+	    			logger.info("Authorization: failed");
+	    			return exceptionHandler.throwExeption(ExceptionEnum.INVALID_TOKEN, "Authorization faild: You are not allowed to use this api");
+	    		}
 	    		
 	    	}
 	    	else 
 	    	{
 	    		logger.info("Authenticating: failed");
-	    		return ResponseEntity.status(401).build();
+	    		return exceptionHandler.throwExeption(ExceptionEnum.INVALID_TOKEN, "Authenticating failed: Invalid Token");
 	    	}
 	    }
 	    else 
@@ -87,44 +98,54 @@ public class SecurityFilterAspect {
 		{
 			String token = requestTokenHeader.substring(7);
 			String username = jwtTokenUtil.getUsernameFromToken(token);
-			UserDetails userDetails = userDetailsService.findByUsername(username);
-			if(userDetails != null) 
+			if(username != null)
 			{
-				boolean vaild = jwtTokenUtil.validateToken(token, userDetails);
-				if(vaild) 
+				UserDetails userDetails = userDetailsService.findByUsername(username);
+				if(userDetails != null) 
 				{
-					UserDto user = userService.findByUsername(username);
-					switch(authorizeAnnotation.type())
-					{
-						case TYPE_VIEW:
-							if(user.getViews().stream()
-									.filter(o-> o.getName().equals(authorizeAnnotation.name()))
-									.findFirst().isPresent())
-								return true;
-							break;
-						case TYPE_ACTION:
-							if(user.getActions().stream()
-									.filter(o-> o.getName().equals(authorizeAnnotation.name()))
-									.findFirst().isPresent())
-								return true;
-							break;
-						case TYPE_ROLE:
-							if(user.getAuthorities().stream()
-									.filter(o-> o.getName().toString().equals(authorizeAnnotation.name()))
-									.findFirst().isPresent())
-							return true;
-						break;
-						default:
-							return false;
-							
-					}
-				
+					return jwtTokenUtil.validateToken(token, userDetails);
+	
+					
 				}
-				
 			}
 		}
 		return false;
 		
+	}
+	private String getTokenFromHeader(String requestTokenHeader) 
+	{
+		return requestTokenHeader.substring(7);
+	}
+	
+	private boolean Authorize(String username, Authorize authorizeAnnotation) 
+	{
+		UserDto user = userService.findByUsername(username);
+		switch(authorizeAnnotation.type())
+		{
+			case TYPE_VIEW:
+				if(user.getViews().stream()
+						.filter(o-> o.getName().equals(authorizeAnnotation.name()))
+						.findFirst().isPresent())
+					return true;
+				break;
+			case TYPE_ACTION:
+				if(user.getActions().stream()
+						.filter(o-> o.getName().equals(authorizeAnnotation.name()))
+						.findFirst().isPresent())
+					return true;
+				break;
+			case TYPE_ROLE:
+				
+				if(user.getAuthorities().stream()
+						.filter(o-> o.getName() == authorizeAnnotation.role_type())
+						.findFirst().isPresent())
+				return true;
+			break;
+			default:
+				return false;
+				
+		}
+		return false;
 	}
 	
 }

@@ -40,7 +40,16 @@ private String secret;
 
 public String getUsernameFromToken(String token) {
 
-	return getClaimFromToken(token, Claims::getSubject);
+	try {
+		
+	
+		
+		return getClaimFromToken(token, Claims::getSubject);
+	
+	} catch (io.jsonwebtoken.SignatureException e) {
+		// TODO: handle exception
+		return null;
+	}
 
 }
 
@@ -112,9 +121,15 @@ private String doGenerateToken(Map<String, Object> claims, String subject) {
 
 public Boolean validateToken(String token, UserDetails userDetails) {
 
-	final String username = getUsernameFromToken(token);
-	
-	return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	try {
+		
+		final String username = getUsernameFromToken(token);
+		
+		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	} catch (io.jsonwebtoken.SignatureException e) {
+		// TODO: handle exception
+		return false;
+	}
 
 }
 

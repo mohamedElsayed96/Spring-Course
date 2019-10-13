@@ -1,6 +1,5 @@
 package com.mohamedelsayed.springprojectaop.controller;
 
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +20,8 @@ import com.mohamedelsayed.springprojectaop.dto.JwtTokenResponseDTO;
 import com.mohamedelsayed.springprojectaop.dto.LoginDTO;
 import com.mohamedelsayed.springprojectaop.dto.UserDetails;
 import com.mohamedelsayed.springprojectaop.dto.UsernamePasswordAuthenticationToken;
+import com.mohamedelsayed.springprojectaop.exception.ExceptionEnum;
+import com.mohamedelsayed.springprojectaop.exception.ExceptionHandler;
 import com.mohamedelsayed.springprojectaop.security.AuthenticationManager;
 import com.mohamedelsayed.springprojectaop.service.UserDetailsService;
 
@@ -32,6 +33,8 @@ import com.mohamedelsayed.springprojectaop.service.UserDetailsService;
 
 public class JwtAuthenticationController {
 
+	@Autowired
+	private ExceptionHandler exceptionHandler;
 	@Autowired
 	
 	private AuthenticationManager authenticationManager;
@@ -60,26 +63,15 @@ public class JwtAuthenticationController {
 			
 			return ResponseEntity.ok(new JwtTokenResponseDTO(token));
 		}
-		return ResponseEntity.status(401).build();
+		
+		return exceptionHandler.throwExeption(ExceptionEnum.INVALID_CREDENTIALS, "Wrong username or password");
 	}
 
 	private boolean authenticate(String username, String password)
 	{
 	
-	//try {
-	
 		return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-	/*
-	} catch (DisabledException e) {
-	
-	throw new Exception("USER_DISABLED", e);
-	
-	} catch (BadCredentialsException e) {
-	
-	throw new Exception("INVALID_CREDENTIALS", e);
-	
-	}*/
-	
+
 	}
 
 }

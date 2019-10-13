@@ -11,13 +11,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mohamedelsayed.springprojectaop.entity.Action;
+import com.mohamedelsayed.springprojectaop.entity.Authority;
 import com.mohamedelsayed.springprojectaop.entity.User;
 import com.mohamedelsayed.springprojectaop.entity.View;
 
 @XmlRootElement(name="userDto")
 public class UserDto {
 	
-	
+	private int id;
 	private String username;
 	private String password;
 	private String address;
@@ -28,9 +29,10 @@ public class UserDto {
 	private List<AuthorityDTO> authorities;
 	
 	
-	public UserDto(String username, String password, String address, @Email String email, List<ViewDTO> views,
+	public UserDto(int id, String username, String password, String address, @Email String email, List<ViewDTO> views,
 			List<ActionDTO> actions, List<AuthorityDTO> authorities) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.address = address;
@@ -43,6 +45,15 @@ public class UserDto {
 	public UserDto() {
 		super();
 		// TODO Auto-generated constructor  stub
+	}
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -100,6 +111,7 @@ public class UserDto {
 	{
 		List<View> views = new ArrayList<View>();
 		List<Action> actions = new ArrayList<Action>();
+		List<Authority> authorities = new ArrayList<Authority>();
 		for(ViewDTO view :this.views) 
 		{
 			views.add(view.mapDtoToEntity());
@@ -108,8 +120,12 @@ public class UserDto {
 		{
 			actions.add(view.mapDtoToEntity());
 		}
+		for(AuthorityDTO authority :this.authorities) 
+		{
+			authorities.add(authority.mapDtoToEntity());
+		}
 		String encoddedPassword = passwordEncoder.encode(password);
-		User user = new User(this.username, encoddedPassword, email, this.address, new Timestamp(System.currentTimeMillis()), null, views, actions);
+		User user = new User(this.username, encoddedPassword, email, this.address, new Timestamp(System.currentTimeMillis()),authorities, views, actions);
 		return user;
 	
 	

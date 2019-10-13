@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.mohamedelsayed.springprojectaop.dto.AuthorityDTO;
+import com.mohamedelsayed.springprojectaop.dto.ViewDTO;
+
 @Entity
 public class Authority {
 	
@@ -34,6 +37,11 @@ public class Authority {
 	}
 	public void setName(AuthorityType name) {
 		this.name = name;
+	}
+	
+	public AuthorityDTO convertToDTO() 
+	{
+		return new AuthorityDTO(id, name);
 	}
 	
 	

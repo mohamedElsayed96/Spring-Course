@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import com.mohamedelsayed.springprojectaop.dto.ActionDTO;
+import com.mohamedelsayed.springprojectaop.dto.AuthorityDTO;
 import com.mohamedelsayed.springprojectaop.dto.UserDto;
 import com.mohamedelsayed.springprojectaop.dto.ViewDTO;
 
@@ -135,14 +136,19 @@ public class User {
 	{
 		List<ViewDTO> views = new ArrayList<ViewDTO>();
 		List<ActionDTO> actions = new ArrayList<ActionDTO>();
+		List<AuthorityDTO> authorities = new ArrayList<AuthorityDTO>();
 		for(View view :this.views) 
 		{
 			views.add(view.convertToDTO());
 		}
-		for(Action view :this.actions) 
+		for(Action action :this.actions) 
 		{
-			actions.add(view.convertToDTO());
+			actions.add(action.convertToDTO());
 		}
-		return new UserDto( username, password, email ,address,  views,  actions, null);
+		for(Authority authority :this.authorities) 
+		{
+			authorities.add(authority.convertToDTO());
+		}
+		return new UserDto(id, username, password, email ,address,  views,  actions, authorities);
 	}
 }
