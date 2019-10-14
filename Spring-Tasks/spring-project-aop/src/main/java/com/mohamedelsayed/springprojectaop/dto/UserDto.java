@@ -112,17 +112,23 @@ public class UserDto {
 		List<View> views = new ArrayList<View>();
 		List<Action> actions = new ArrayList<Action>();
 		List<Authority> authorities = new ArrayList<Authority>();
-		for(ViewDTO view :this.views) 
-		{
-			views.add(view.mapDtoToEntity());
+		if(this.views != null) {
+			for(ViewDTO view :this.views) 
+			{
+				views.add(view.mapDtoToEntity());
+			}
 		}
-		for(ActionDTO view :this.actions) 
-		{
-			actions.add(view.mapDtoToEntity());
+		if(this.actions != null) {
+			for(ActionDTO view :this.actions) 
+			{
+				actions.add(view.mapDtoToEntity());
+			}
 		}
-		for(AuthorityDTO authority :this.authorities) 
-		{
-			authorities.add(authority.mapDtoToEntity());
+		if(this.authorities != null) {
+			for(AuthorityDTO authority :this.authorities) 
+			{
+				authorities.add(authority.mapDtoToEntity());
+			}
 		}
 		String encoddedPassword = passwordEncoder.encode(password);
 		User user = new User(this.username, encoddedPassword, email, this.address, new Timestamp(System.currentTimeMillis()),authorities, views, actions);

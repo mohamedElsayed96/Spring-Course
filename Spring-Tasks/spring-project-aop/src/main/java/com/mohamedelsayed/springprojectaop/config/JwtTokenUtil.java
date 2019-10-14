@@ -40,16 +40,12 @@ private String secret;
 
 public String getUsernameFromToken(String token) {
 
-	try {
-		
+	
 	
 		
 		return getClaimFromToken(token, Claims::getSubject);
 	
-	} catch (io.jsonwebtoken.SignatureException e) {
-		// TODO: handle exception
-		return null;
-	}
+	
 
 }
 

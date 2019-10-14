@@ -56,8 +56,23 @@ public class SecurityFilterAspect {
 	    
 	    if(myAnnotation != null) 
 	    {
+	    	boolean valid = false;
 	    	logger.info("Authenticating....");
-	    	boolean valid = authenticate(requestTokenHeader, myAnnotation);
+	    	
+	    	try {
+	    		valid = authenticate(requestTokenHeader, myAnnotation);
+				
+			} catch (io.jsonwebtoken.SignatureException e) {
+				// TODO: handle exception
+	    		return exceptionHandler.throwExeption(ExceptionEnum.INVALID_TOKEN, "Authenticating failed: Invalid Token");
+
+			}
+	    	catch (io.jsonwebtoken.ExpiredJwtException e) {
+				// TODO: handle exception
+	    		return exceptionHandler.throwExeption(ExceptionEnum.INVALID_TOKEN, "Authenticating failed:  Token Expired");
+
+			}
+	    	
 	    	if(valid) 
 	    	{
 	    		logger.info("Authorizating ...");
@@ -97,6 +112,8 @@ public class SecurityFilterAspect {
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) 
 		{
 			String token = requestTokenHeader.substring(7);
+			
+				
 			String username = jwtTokenUtil.getUsernameFromToken(token);
 			if(username != null)
 			{
@@ -108,6 +125,8 @@ public class SecurityFilterAspect {
 					
 				}
 			}
+			
+			
 		}
 		return false;
 		
